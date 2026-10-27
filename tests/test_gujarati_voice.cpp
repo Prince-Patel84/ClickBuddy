@@ -1,3 +1,5 @@
+#include "core/PathUtils.hpp"
+
 #include <windows.h>
 #include <mmsystem.h>
 #include <iostream>
@@ -14,7 +16,8 @@ int main() {
     std::wcout << L"     SISTER'S CALL - NATIVE GUJARATI VOICE PLAYBACK TEST   \n";
     std::wcout << L"===========================================================\n\n";
 
-    const wchar_t* audioPath = L"cache\\audio\\hello_gujarati.mp3";
+    // Use PathUtils to dynamically find cache/audio/hello_gujarati.mp3
+    std::wstring audioPath = (SistersCall::PathUtils::getAudioCacheDir() / L"hello_gujarati.mp3").wstring();
     std::wcout << L"[VoiceEngine]: Opening MP3 audio file: " << audioPath << L"\n";
 
     // 1. Reset any existing MCI aliases to keep the audio subsystem clean
