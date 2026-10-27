@@ -7,7 +7,12 @@
 
 #include <windows.h>
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow) {
+int WINAPI wWinMain(
+    [[maybe_unused]] HINSTANCE hInstance,
+    [[maybe_unused]] HINSTANCE hPrevInstance,
+    [[maybe_unused]] PWSTR lpCmdLine,
+    [[maybe_unused]] int nCmdShow
+) {
     const wchar_t* message = 
         L"Welcome to Sister's Call!\n\n"
         L"English: Your patient digital brother.\n"
