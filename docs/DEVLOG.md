@@ -43,8 +43,8 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
   - Implemented 64-bit string hashing (`std::hash`) for disk caching in `cache/audio/`, achieving instant 0ms latency on repeated phrases.
   - Multi-threaded asynchronous playback via `std::thread` and thread-safe control flags (`std::atomic<bool>`).
   - Implemented instant audio silencing (`stop()`) without dangling threads or leaked MCI handles.
-  - **Identified & Resolved Working Directory Trap**: Implemented dynamic project root traversal using Win32 `GetModuleFileNameW`. The executable now runs reliably when launched from terminal, child directories (`build/`), or double-clicked from Windows File Explorer.
-  - Verified end-to-end execution with exit code 0 across all 4 test assertions.
+  - **Universal Path Architecture**: Created `include/core/PathUtils.hpp`. Standardized root directory traversal via Win32 `GetModuleFileNameW`. Every executable in the project now runs reliably from any location (terminal, `build/` folder, or Windows File Explorer).
+  - Verified 100% clean build and exit code 0 across all 5 CMake targets.
 
 ---
 
@@ -52,7 +52,7 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
 
 - [x] Step 0: Project setup & Unicode Win32 verification
 - [x] Step 1: Abstract Subsystem Contracts & CMake Mock Pipeline
-- [x] Step 2: The Voice Engine (The Tongue) - Production `EdgeTtsVoiceEngine`
+- [x] Step 2: The Voice Engine (The Tongue) - Production `EdgeTtsVoiceEngine` & `PathUtils`
 - [ ] Step 3: The Guide (Visual Overlay) - Native Win32 click-through transparent window
 - [ ] Step 4: The Eyes - Inspecting Windows UI elements via COM / `IUIAutomation`
 - [ ] Step 5: The Brain - Pedagogy, adaptive pacing, and intent reasoning
