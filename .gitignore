@@ -36,6 +36,17 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Cache & Media
+cache/
+*.mp3
+*.wav
+
 # VS Code directory (keep personal settings out of repo)
 .vscode/*
 !.vscode/settings.json

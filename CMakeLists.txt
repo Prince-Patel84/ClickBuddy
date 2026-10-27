@@ -49,3 +49,25 @@ add_executable(test_mock_pipeline
 target_include_directories(test_mock_pipeline PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+# ====================================================================
+# Target 3: Audio Playback Test (WinMM Subsystem)
+# ====================================================================
+add_executable(test_audio_playback
+    tests/test_audio_playback.cpp
+)
+
+target_link_libraries(test_audio_playback PRIVATE
+    winmm
+)
+
+# ====================================================================
+# Target 4: Gujarati Neural Voice Playback Test (MCI Subsystem)
+# ====================================================================
+add_executable(test_gujarati_voice
+    tests/test_gujarati_voice.cpp
+)
+
+target_link_libraries(test_gujarati_voice PRIVATE
+    winmm
+)
