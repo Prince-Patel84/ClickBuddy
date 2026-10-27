@@ -9,6 +9,27 @@
 
 namespace SistersCall {
 
+/**
+ * @brief Helper function to locate the project root directory regardless
+ *        of where the executable was launched from (Terminal or File Explorer).
+ */
+static std::filesystem::path getAppRootDir() {
+    wchar_t exePathBuf[MAX_PATH];
+    GetModuleFileNameW(NULL, exePathBuf, MAX_PATH);
+    std::filesystem::path current = std::filesystem::path(exePathBuf).parent_path();
+
+    // Walk up directory tree until we find the root containing .venv or CMakeLists.txt
+    while (!current.empty() && current != current.root_path()) {
+        if (std::filesystem::exists(current / ".venv") || std::filesystem::exists(current / "CMakeLists.txt")) {
+            return current;
+        }
+        current = current.parent_path();
+    }
+
+    // Fallback to current directory
+    return std::filesystem::current_path();
+}
+
 EdgeTtsVoiceEngine::EdgeTtsVoiceEngine() {
 }
 
@@ -23,7 +44,9 @@ EdgeTtsVoiceEngine::~EdgeTtsVoiceEngine() {
 }
 
 bool EdgeTtsVoiceEngine::initialize() {
-    std::filesystem::create_directories("cache/audio");
+    std::filesystem::path rootDir = getAppRootDir();
+    std::filesystem::create_directories(rootDir / "cache" / "audio");
+
     mciSendStringW(L"close all", NULL, 0, NULL);
     return true;
 }
@@ -44,29 +67,36 @@ std::wstring EdgeTtsVoiceEngine::getOrGenerateAudio(
     const std::wstring& text, 
     const std::wstring& voiceName
 ) {
+    std::filesystem::path rootDir = getAppRootDir();
     size_t hashValue = std::hash<std::wstring>{}(voiceName + L"_" + text);
 
-    std::wstringstream ss;
-    ss << L"cache\\audio\\" << voiceName << L"_" << hashValue << L".mp3";
-    std::wstring cachedPath = ss.str();
+    std::filesystem::path cachedPath = rootDir / "cache" / "audio" / 
+        (voiceName + L"_" + std::to_wstring(hashValue) + L".mp3");
 
     // Cache hit: file already exists
     if (std::filesystem::exists(cachedPath)) {
-        return cachedPath;
+        return cachedPath.wstring();
+    }
+
+    // Locate the virtual environment executable with an absolute path
+    std::filesystem::path edgeTtsExe = rootDir / ".venv" / "Scripts" / "edge-tts.exe";
+    if (!std::filesystem::exists(edgeTtsExe)) {
+        std::wcerr << L"[EdgeTtsVoiceEngine ERROR]: Could not find: " << edgeTtsExe.wstring() << L"\n";
+        return L"";
     }
 
     // Cache miss: generate using edge-tts
     std::wstringstream cmd;
-    cmd << L".\\.venv\\Scripts\\edge-tts.exe"
+    cmd << L"\"" << edgeTtsExe.wstring() << L"\""
         << L" --voice \"" << voiceName << L"\""
         << L" --text \"" << text << L"\""
-        << L" --write-media \"" << cachedPath << L"\""
+        << L" --write-media \"" << cachedPath.wstring() << L"\""
         << L" > NUL 2>&1";
 
     int result = _wsystem(cmd.str().c_str());
 
     if (result == 0 && std::filesystem::exists(cachedPath)) {
-        return cachedPath;
+        return cachedPath.wstring();
     }
 
     return L"";
