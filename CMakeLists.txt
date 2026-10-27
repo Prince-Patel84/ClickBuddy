@@ -71,3 +71,19 @@ add_executable(test_gujarati_voice
 target_link_libraries(test_gujarati_voice PRIVATE
     winmm
 )
+
+# ====================================================================
+# Target 5: Real EdgeTtsVoiceEngine Verification Test
+# ====================================================================
+add_executable(test_real_voice_engine
+    tests/test_real_voice_engine.cpp
+    src/voice/EdgeTtsVoiceEngine.cpp
+)
+
+target_include_directories(test_real_voice_engine PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(test_real_voice_engine PRIVATE
+    winmm
+)
