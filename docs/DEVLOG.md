@@ -43,10 +43,8 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
   - Implemented 64-bit string hashing (`std::hash`) for disk caching in `cache/audio/`, achieving instant 0ms latency on repeated phrases.
   - Multi-threaded asynchronous playback via `std::thread` and thread-safe control flags (`std::atomic<bool>`).
   - Implemented instant audio silencing (`stop()`) without dangling threads or leaked MCI handles.
-  - Created `tests/test_real_voice_engine.cpp` verifying:
-    1. Real Gujarati speech synthesis with `onComplete` buzzer execution.
-    2. Smart cache hit validation (0ms playback initiation).
-    3. Early interruption cancelling callback without noise.
+  - **Identified & Resolved Working Directory Trap**: Implemented dynamic project root traversal using Win32 `GetModuleFileNameW`. The executable now runs reliably when launched from terminal, child directories (`build/`), or double-clicked from Windows File Explorer.
+  - Verified end-to-end execution with exit code 0 across all 4 test assertions.
 
 ---
 
