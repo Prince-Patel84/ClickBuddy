@@ -34,14 +34,26 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
   - Addressed C++ function override default argument binding rules and UTF-16 console mode (`_O_U16TEXT`).
   - Achieved 100% clean compilation with zero warnings and zero memory leaks.
 
+### Milestone 2: Native Audio Playback & Gujarati Neural Voice (2026-10-27)
+- **Status**: In Progress (Branch: `feat/voice-engine`)
+- **Achievements**:
+  - Isolated environment setup: Configured `.venv` for neural audio synthesis, ensuring zero global Python pollution.
+  - Updated `.gitignore` to track only pure C++ and project files, cleanly ignoring `.venv/` and `cache/`.
+  - Implemented `tests/test_audio_playback.cpp` using Windows Multimedia (`winmm.lib` / `PlaySoundW`).
+  - Verified non-blocking asynchronous audio playback (`SND_ASYNC`) at the OS level.
+  - Generated neural audio in Gujarati (`gu-IN-DhwaniNeural`): *"નમસ્તે! હું તમારો ડિજિટલ ભાઈ છું. આપણે સાથે મળીને કમ્પ્યુટર શીખીશું."*
+  - Implemented `tests/test_gujarati_voice.cpp` using the native Win32 Media Control Interface (`mciSendStringW`).
+  - Successfully verified non-blocking MP3 playback, real-time background status tracking, and audio completion callback trigger in C++.
+
 ---
 
 ## Active Roadmap
 
 - [x] Step 0: Project setup & Unicode Win32 verification
 - [x] Step 1: Abstract Subsystem Contracts & CMake Mock Pipeline
-- [ ] Step 2: The Guide (Visual Overlay) - Native Win32 click-through transparent window
-- [ ] Step 3: The Voice Engine (The Tongue) - Real asynchronous audio synthesis in Gu/Hi/En
+- [x] Step 2.1: Native WinMM & MCI Audio playback tests
+- [ ] Step 2.2: Implement `EdgeTtsVoiceEngine` class inheriting from `IVoiceEngine`
+- [ ] Step 3: The Guide (Visual Overlay) - Native Win32 click-through transparent window
 - [ ] Step 4: The Eyes - Inspecting Windows UI elements via COM / `IUIAutomation`
 - [ ] Step 5: The Brain - Pedagogy, adaptive pacing, and intent reasoning
 - [ ] Step 6: Autonomous Generalist Engine - Dynamic multi-step workflows
