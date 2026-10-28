@@ -136,7 +136,7 @@ ClickBuddy/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/princegithub84/ClickBuddy.git
+   git clone https://github.com/Prince-Patel84/ClickBuddy.git
    cd ClickBuddy
    ```
 
