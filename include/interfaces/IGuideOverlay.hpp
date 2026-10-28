@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdint>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief Configuration for how a visual highlight should be rendered.
@@ -70,4 +70,4 @@ public:
     virtual void setVisible(bool visible) = 0;
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

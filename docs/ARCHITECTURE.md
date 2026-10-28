@@ -1,8 +1,8 @@
-# System Architecture - Sister's Call
+# System Architecture - ClickBuddy
 
 ## Architectural Overview
 
-Sister's Call is organized into decoupled subsystems. It avoids heavy runtimes like Electron or Python interpreters for its core loop, ensuring a sub-30 MB RAM footprint and instantaneous startup on budget hardware.
+ClickBuddy is organized into decoupled subsystems using pure abstract C++ interfaces (SOLID Dependency Inversion). It avoids heavy runtimes like Electron or Python interpreters for its core loop, ensuring a sub-25 MB RAM footprint and instantaneous startup on budget hardware.
 
 ```
 +-----------------------------------------------------------------------+
@@ -17,28 +17,32 @@ Sister's Call is organized into decoupled subsystems. It avoids heavy runtimes l
 
 ## Subsystem Breakdown
 
-### 1. The Eyes (`src/eyes/`)
+### 1. The Eyes (`include/interfaces/IEyes.hpp`)
 - Uses the native Windows Accessibility subsystem: **UI Automation (UIA)** via COM interface `IUIAutomation`.
 - Traverses the active window's visual tree to find buttons, text boxes, and menus without taking heavy or privacy-invasive screenshots.
 - Retrieves high-DPI-accurate bounding rectangles `(x, y, width, height)`.
+- Crash-proof return values via modern `std::optional<UIElement>`.
 
-### 2. The Guide (`src/guide/`)
+### 2. The Guide (`include/interfaces/IGuideOverlay.hpp`)
 - A borderless, fullscreen transparent click-through window.
 - Utilizes Win32 Extended Window Styles: `WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST`.
 - Renders glowing indicator rectangles, animated bouncy arrows, and contextual tooltips right over target buttons.
 - Mouse clicks pass completely unobstructed to the underlying application.
 
-### 3. The Voice Engine (`src/voice/`)
-- Audio synthesis and streaming in Gujarati, Hindi, and English.
-- Asynchronous playback using native Windows Multimedia / Media Foundation or lightweight WebSockets to avoid blocking the main UI thread.
+### 3. The Voice Engine (`include/interfaces/IVoiceEngine.hpp` & `src/voice/EdgeTtsVoiceEngine.cpp`)
+- Audio synthesis and streaming in Gujarati (`gu-IN-DhwaniNeural`), Hindi (`hi-IN-SwaraNeural`), and English (`en-IN-NeerjaNeural`).
+- Multi-threaded asynchronous playback via `std::thread`.
+- Local disk caching via 64-bit `std::hash` in `cache/audio/`, achieving instant 0ms latency on repeated phrases.
+- Early cancellation and instant silencing via `std::atomic<bool>`.
+- Completion notifications via `SpeechCompletionCallback` buzzers.
 
-### 4. The Brain (`src/brain/`)
+### 4. The Brain (`include/interfaces/IBrain.hpp`)
 - Converts active UI state trees into compact structural representations.
 - Drives the pedagogical state machine:
   - Detects hesitations (idle timers).
   - Handles interruptions ("I know this" -> fast forward).
   - Injects CS curiosity trivia and real-world analogies.
 
-### 5. Multilingual Localization Engine (`src/i18n/`)
-- First-class support for Gujarati, Hindi, and English string tables.
-- Wide-string UTF-16 representation across all OS boundaries.
+### 5. Path & Environment Subsystem (`include/core/PathUtils.hpp`)
+- Universal root directory resolution via Win32 `GetModuleFileNameW`.
+- Guarantees seamless execution from any directory, terminal, or File Explorer double-click.

@@ -7,14 +7,14 @@
 #include <fcntl.h>
 #include <io.h>
 
-using namespace SistersCall;
+using namespace ClickBuddy;
 
 int main() {
     // Enable UTF-16 Unicode console output
     _setmode(_fileno(stdout), _O_U16TEXT);
 
     std::wcout << L"===========================================================\n";
-    std::wcout << L"    SISTER'S CALL - REAL VOICE ENGINE VERIFICATION TEST    \n";
+    std::wcout << L"     CLICKBUDDY - REAL VOICE ENGINE VERIFICATION TEST      \n";
     std::wcout << L"===========================================================\n\n";
 
     // 1. Program to the abstract contract IVoiceEngine!
@@ -73,7 +73,7 @@ int main() {
     bool interruptedCallbackFired = false;
 
     voice->speak(
-        L"આ એક લાંબુ વાક્ય છે જે આપણે વચ્ચેથી રોકી દઈશું કારણ કે બહેને બટન ક્લિક કરી દીધું છે.",
+        L"આ એક લાંબુ વાક્ય છે જે આપણે વચ્ચેથી રોકી દઈશું કારણ કે વપરાશકર્તાએ બટન ક્લિક કરી દીધું છે.",
         Language::Gujarati,
         LearnerPace::Normal,
         [&interruptedCallbackFired]() {
@@ -90,7 +90,7 @@ int main() {
     }
 
     // Now audio is actively playing! Let it play for 500ms
-    std::wcout << L"   Audio is actively playing! Simulating sister clicking button early...\n";
+    std::wcout << L"   Audio is actively playing! Simulating user clicking button early...\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     voice->stop();

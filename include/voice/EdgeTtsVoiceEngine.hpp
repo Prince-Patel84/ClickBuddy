@@ -6,7 +6,7 @@
 #include <mutex>
 #include <string>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief Concrete implementation of IVoiceEngine powered by Microsoft Edge Neural TTS
@@ -55,4 +55,4 @@ private:
     std::mutex m_speakMutex;
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

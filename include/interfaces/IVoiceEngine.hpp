@@ -4,7 +4,7 @@
 #include <string>
 #include <functional>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief Signature for the callback invoked when speech playback finishes.
@@ -19,9 +19,6 @@ using SpeechCompletionCallback = std::function<void()>;
  */
 class IVoiceEngine {
 public:
-    // Virtual destructor is MANDATORY for base interface classes in C++.
-    // It guarantees that deleting a derived class through an IVoiceEngine*
-    // cleans up all memory and audio buffers correctly without leaks.
     virtual ~IVoiceEngine() = default;
 
     /**
@@ -69,4 +66,4 @@ public:
     virtual void setVolume(float volume) = 0;
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

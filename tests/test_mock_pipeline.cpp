@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <io.h>
 
-using namespace SistersCall;
+using namespace ClickBuddy;
 
 // ============================================================================
 // 1. Mock Voice Engine (Simulates Speech Output & Callback)
@@ -37,7 +37,6 @@ public:
 
         std::wcout << L"[MockVoiceEngine] (Speaking): " << text << L"\n";
 
-        // Simulate audio playback finishing, then trigger the callback!
         speaking = false;
         if (onComplete) {
             std::wcout << L"[MockVoiceEngine]: Audio playback complete. Triggering callback buzzer!\n";
@@ -102,7 +101,6 @@ public:
     }
 
     UIElement getActiveWindowTree() override {
-        // Return a mock window with an "Environment Variables..." button inside
         UIElement window;
         window.name = L"System Properties";
         window.type = UIControlType::Window;
@@ -184,51 +182,42 @@ public:
 // MAIN VERIFICATION TEST
 // ============================================================================
 int main() {
-    // Tell the Windows Console to accept pure UTF-16 wide Unicode characters
     _setmode(_fileno(stdout), _O_U16TEXT);
 
     std::wcout << L"===========================================================\n";
-    std::wcout << L"   SISTER'S CALL - ARCHITECTURE END-TO-END VERIFICATION    \n";
+    std::wcout << L"     CLICKBUDDY - ARCHITECTURE END-TO-END VERIFICATION     \n";
     std::wcout << L"===========================================================\n\n";
 
-    // 1. Program to the INTERFACES, not the implementations! (Dependency Inversion)
-    std::unique_ptr<IVoiceEngine>  voice   = std::make_unique<MockVoiceEngine>();
-    std::unique_ptr<IGuideOverlay> overlay = std::make_unique<MockGuideOverlay>();
-    std::unique_ptr<IEyes>         eyes    = std::make_unique<MockEyes>();
-    std::unique_ptr<IBrain>        brain   = std::make_unique<MockBrain>();
+    auto voice   = std::make_unique<MockVoiceEngine>();
+    auto overlay = std::make_unique<MockGuideOverlay>();
+    auto eyes    = std::make_unique<MockEyes>();
+    auto brain   = std::make_unique<MockBrain>();
 
-    // 2. Initialize all modules
     assert(voice->initialize());
     assert(overlay->initialize());
     assert(eyes->initialize());
     assert(brain->initialize());
 
-    // 3. Step 1: Sister states her goal
     std::wstring goal = L"Setup C Compiler";
-    std::wcout << L"\n[Scenario]: Sister asks: \"" << goal << L"\" in Gujarati.\n";
+    std::wcout << L"\n[Scenario]: User asks: \"" << goal << L"\" in Gujarati.\n";
 
-    // 4. Step 2: The Eyes inspect the active window
     UIElement activeScreen = eyes->getActiveWindowTree();
     std::wcout << L"[Eyes]: Active window is \"" << activeScreen.name << L"\"\n";
 
-    // 5. Step 3: The Brain formulates the pedagogical step
     PedagogicalStep step = brain->decideNextStep(goal, activeScreen, Language::Gujarati);
 
-    // 6. Step 4: The Eyes find the coordinates of the target element
     auto targetElement = eyes->findElement(step.targetElementName);
     assert(targetElement.has_value());
     std::wcout << L"[Eyes]: Target \"" << targetElement->name << L"\" located at ("
                << targetElement->bounds.x << L", " << targetElement->bounds.y << L")\n";
 
-    // 7. Step 5: The Guide Overlay draws the visual cue
     HighlightStyle style;
-    style.borderColor = 0xFF00E676; // Emerald green
+    style.borderColor = 0xFF00E676;
     style.arrow = ArrowDirection::FromTop;
     style.tooltipText = L"અહીં ક્લિક કરો (Click here)";
     overlay->showHighlight(targetElement->bounds, style);
     assert(overlay->isVisible());
 
-    // 8. Step 6: The Voice Engine speaks the Gujarati explanation
     bool callbackFired = false;
     voice->speak(
         step.spokenExplanation,
@@ -239,7 +228,6 @@ int main() {
         }
     );
 
-    // 9. Verify callback buzzed!
     assert(callbackFired);
 
     std::wcout << L"\n===========================================================\n";

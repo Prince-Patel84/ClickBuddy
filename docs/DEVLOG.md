@@ -1,10 +1,12 @@
-# Development Log - Sister's Call
+# Development Log - ClickBuddy
 
 ## Project Vision
-An autonomous, patient, voice-guided desktop tutor that empowers users (especially beginners and non-English speakers) to navigate and master any software on Windows.
+An autonomous, patient, voice-guided desktop tutor and companion that empowers users (especially beginners and non-English speakers) to navigate and master any software on Windows.
+- **Project Name**: **ClickBuddy**
 - **Languages Supported**: Gujarati (ગુજરાતી), Hindi (हिन्दी), English.
 - **Philosophy**: Pedagogy & Empowerment over blind automation. Teaches concepts via analogies and visual overlays without capturing invasive screenshots.
 - **Tech Stack**: Native C++ (Win32, COM, UI Automation, Direct2D/GDI+), Microsoft Neural Voices (Edge TTS), Lightweight LLM Reasoning.
+- **License**: MIT Open Source License.
 
 ---
 
@@ -43,8 +45,17 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
   - Implemented 64-bit string hashing (`std::hash`) for disk caching in `cache/audio/`, achieving instant 0ms latency on repeated phrases.
   - Multi-threaded asynchronous playback via `std::thread` and thread-safe control flags (`std::atomic<bool>`).
   - Implemented instant audio silencing (`stop()`) without dangling threads or leaked MCI handles.
-  - **Universal Path Architecture**: Created `include/core/PathUtils.hpp`. Standardized root directory traversal via Win32 `GetModuleFileNameW`. Every executable in the project now runs reliably from any location (terminal, `build/` folder, or Windows File Explorer).
+  - Universal Path Architecture: Created `include/core/PathUtils.hpp`. Standardized root directory traversal via Win32 `GetModuleFileNameW`. Every executable in the project now runs reliably from any location (terminal, `build/` folder, or Windows File Explorer).
   - Verified 100% clean build and exit code 0 across all 5 CMake targets.
+
+### Milestone 3: Open-Source Transition & Rebranding to ClickBuddy (2026-10-28)
+- **Status**: Completed (Merged into `develop`)
+- **Achievements**:
+  - Officially rebranded from "Sister's Call" to **ClickBuddy**.
+  - Refactored entire codebase namespace to `namespace ClickBuddy`.
+  - Added official open-source MIT License (`LICENSE`) under Prince Patel.
+  - Created comprehensive GitHub README (`README.md`) featuring mission, zero-screenshot philosophy, architecture diagrams, and contribution guidelines.
+  - Updated CMake project configuration to `ClickBuddy` producing `click_buddy.exe`.
 
 ---
 
@@ -53,7 +64,8 @@ An autonomous, patient, voice-guided desktop tutor that empowers users (especial
 - [x] Step 0: Project setup & Unicode Win32 verification
 - [x] Step 1: Abstract Subsystem Contracts & CMake Mock Pipeline
 - [x] Step 2: The Voice Engine (The Tongue) - Production `EdgeTtsVoiceEngine` & `PathUtils`
-- [ ] Step 3: The Guide (Visual Overlay) - Native Win32 click-through transparent window
-- [ ] Step 4: The Eyes - Inspecting Windows UI elements via COM / `IUIAutomation`
-- [ ] Step 5: The Brain - Pedagogy, adaptive pacing, and intent reasoning
-- [ ] Step 6: Autonomous Generalist Engine - Dynamic multi-step workflows
+- [x] Step 3: Open-Source Rebranding to ClickBuddy (MIT License, README, Namespace)
+- [ ] Step 4: The Guide (Visual Overlay) - Native Win32 click-through transparent window
+- [ ] Step 5: The Eyes - Inspecting Windows UI elements via COM / `IUIAutomation`
+- [ ] Step 6: The Brain - Pedagogy, adaptive pacing, and intent reasoning
+- [ ] Step 7: Autonomous Generalist Engine - Dynamic multi-step workflows

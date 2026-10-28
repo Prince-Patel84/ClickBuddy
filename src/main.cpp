@@ -14,12 +14,12 @@ int WINAPI wWinMain(
     [[maybe_unused]] int nCmdShow
 ) {
     const wchar_t* message = 
-        L"Welcome to Sister's Call!\n\n"
-        L"English: Your patient digital brother.\n"
-        L"ગુજરાતી: તમારી સાથે શીખનાર તમારો ડિજિટલ ભાઈ.\n"
-        L"हिन्दी: તમારી સાથે / आपकी डिजिटल यात्रा का सच्चा साथी।";
+        L"Welcome to ClickBuddy!\n\n"
+        L"English: Your patient digital buddy.\n"
+        L"ગુજરાતી: તમારી સાથે શીખનાર તમારો ડિજિટલ સાથી.\n"
+        L"हिन्दी: आपकी डिजिटल यात्रा का सच्चा साथी।";
 
-    const wchar_t* title = L"Sister's Call - Initializing";
+    const wchar_t* title = L"ClickBuddy - Initializing";
 
     MessageBoxW(
         NULL,

@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief Represents a rectangular region on the screen.
@@ -31,7 +31,7 @@ struct UIRect {
 };
 
 /**
- * @brief The languages natively supported by Sister's Call.
+ * @brief The languages natively supported by ClickBuddy.
  * 
  * We use an 'enum class' (scoped enum) so values like 'Gujarati'
  * do not pollute the global namespace.
@@ -80,4 +80,4 @@ enum class ArrowDirection {
     FromRight
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

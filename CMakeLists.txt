@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 
-# Semantic Version v0.1.0
-project(SistersCall 
+# Semantic Version v0.1.0 - ClickBuddy
+project(ClickBuddy 
     VERSION 0.1.0 
-    DESCRIPTION "An autonomous, multilingual desktop tutor for computer beginners"
+    DESCRIPTION "An autonomous, multilingual desktop tutor and companion for computer beginners"
     LANGUAGES CXX
 )
 
@@ -23,20 +23,20 @@ else()
 endif()
 
 # ====================================================================
-# Target 1: The Main Desktop Application (Sister's Call)
+# Target 1: The Main Desktop Application (ClickBuddy)
 # ====================================================================
-add_executable(sisters_call
+add_executable(click_buddy
     src/main.cpp
 )
 
-target_include_directories(sisters_call PRIVATE
+target_include_directories(click_buddy PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 if(MINGW)
     # -mwindows: Suppress black console window in production
     # -municode: Unicode wWinMain entry point
-    target_link_options(sisters_call PRIVATE -mwindows -municode)
+    target_link_options(click_buddy PRIVATE -mwindows -municode)
 endif()
 
 # ====================================================================

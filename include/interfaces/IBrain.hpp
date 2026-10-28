@@ -5,7 +5,7 @@
 #include <string>
 #include <optional>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief The physical action the learner is being guided to perform.
@@ -93,4 +93,4 @@ public:
     virtual void resetSession() = 0;
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

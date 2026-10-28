@@ -5,7 +5,7 @@
 #include <vector>
 #include <optional>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 /**
  * @brief Represents a single interactive control or window on screen.
@@ -82,4 +82,4 @@ public:
     virtual std::optional<UIElement> getFocusedElement() = 0;
 };
 
-} // namespace SistersCall
+} // namespace ClickBuddy

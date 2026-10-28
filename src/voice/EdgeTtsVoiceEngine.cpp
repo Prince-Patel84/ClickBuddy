@@ -8,7 +8,7 @@
 #include <sstream>
 #include <chrono>
 
-namespace SistersCall {
+namespace ClickBuddy {
 
 EdgeTtsVoiceEngine::EdgeTtsVoiceEngine() {
 }
@@ -20,7 +20,7 @@ EdgeTtsVoiceEngine::~EdgeTtsVoiceEngine() {
         m_workerThread.join();
     }
 
-    mciSendStringW(L"close sc_voice", NULL, 0, NULL);
+    mciSendStringW(L"close cb_voice", NULL, 0, NULL);
 }
 
 bool EdgeTtsVoiceEngine::initialize() {
@@ -106,19 +106,19 @@ void EdgeTtsVoiceEngine::speak(
             return;
         }
 
-        mciSendStringW(L"close sc_voice", NULL, 0, NULL);
+        mciSendStringW(L"close cb_voice", NULL, 0, NULL);
 
-        std::wstring openCmd = L"open \"" + audioFile + L"\" type mpegvideo alias sc_voice";
+        std::wstring openCmd = L"open \"" + audioFile + L"\" type mpegvideo alias cb_voice";
         if (mciSendStringW(openCmd.c_str(), NULL, 0, NULL) != 0) {
             m_isSpeaking = false;
             return;
         }
 
-        mciSendStringW(L"play sc_voice", NULL, 0, NULL);
+        mciSendStringW(L"play cb_voice", NULL, 0, NULL);
 
         wchar_t statusBuf[128];
         while (!m_stopRequested) {
-            mciSendStringW(L"status sc_voice mode", statusBuf, 128, NULL);
+            mciSendStringW(L"status cb_voice mode", statusBuf, 128, NULL);
 
             if (wcscmp(statusBuf, L"playing") != 0) {
                 break;
@@ -127,8 +127,8 @@ void EdgeTtsVoiceEngine::speak(
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
 
-        mciSendStringW(L"stop sc_voice", NULL, 0, NULL);
-        mciSendStringW(L"close sc_voice", NULL, 0, NULL);
+        mciSendStringW(L"stop cb_voice", NULL, 0, NULL);
+        mciSendStringW(L"close cb_voice", NULL, 0, NULL);
 
         bool finishedNaturally = !m_stopRequested;
         m_isSpeaking = false;
@@ -142,7 +142,7 @@ void EdgeTtsVoiceEngine::speak(
 
 void EdgeTtsVoiceEngine::stop() {
     m_stopRequested = true;
-    mciSendStringW(L"stop sc_voice", NULL, 0, NULL);
+    mciSendStringW(L"stop cb_voice", NULL, 0, NULL);
 }
 
 bool EdgeTtsVoiceEngine::isSpeaking() const {
@@ -153,4 +153,4 @@ void EdgeTtsVoiceEngine::setVolume(float volume) {
     m_volume = volume;
 }
 
-} // namespace SistersCall
+} // namespace ClickBuddy

@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <string>
 
-namespace SistersCall {
+namespace ClickBuddy {
 namespace PathUtils {
 
 /**
@@ -56,4 +56,4 @@ inline std::filesystem::path getVenvScript(const std::wstring& scriptName) {
 }
 
 } // namespace PathUtils
-} // namespace SistersCall
+} // namespace ClickBuddy
